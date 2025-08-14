@@ -28,11 +28,11 @@
 <script>
     const scoreList = document.getElementById("scoreList");
     const scores = JSON.parse(localStorage.getItem("bestScores")) || [];
-    if(scores.length === 0){
+    if (scores.length === 0) {
         scoreList.innerHTML = "<li>Aucun score enregistré.</li>";
     } else {
-        scores.forEach((s, i) => {
-            scoreList.innerHTML += `<li>#${i+1} - ${s.name} : ${s.score} points 😺</li>`;
+        scores.forEach((entry, i) => {
+            scoreList.innerHTML += `<li>#${i+1} - ${entry.name} : ${entry.score} points 😺</li>`;
         });
     }
 </script>
