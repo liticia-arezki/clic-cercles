@@ -1,35 +1,25 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clic sur les Cercles 🎯</title>
- <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <header>
-        <h1>🎯 Clic sur les Cercles</h1>
-        <nav>
-            <a href="index.html">Accueil</a>
-            <a href="game.html">Jouer</a>
-            <a href="scores.html">Scores</a>
-        </nav>
-    </header>
+import java.util.Scanner;
+import java.util.Random;
 
-    <main>
-        <h2>Bienvenue !</h2>
-        <p>
-            Teste ta vitesse de réaction en cliquant sur les cercles qui apparaissent
-            aléatoirement à l’écran. Plus tu es rapide, meilleur est ton score !
-        </p>
-        <p>
-            <strong>Règle :</strong> clique sur le cercle avant qu’il disparaisse.
-        </p>
-        <a class="btn" href="game.html">▶ Commencer à jouer</a>
-    </main>
+public class Jeu {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Random rand = new Random();
+        System.out.print("Entrez votre nom : ");
+        String name = sc.nextLine();
+        int score = 0;
 
-    <footer>
-        <p>© 2025 Clic sur les Cercles</p>
-    </footer>
-</body>
-</html>
+        for(int i=0;i<10;i++){ // 10 tours
+            int circle = rand.nextInt(2); // 50% chance
+            System.out.println("Cercle apparu ! Tapez 1 pour cliquer...");
+            int input = sc.nextInt();
+            if(input==1 && circle==1){
+                score++;
+                System.out.println("Bravo ! Score = "+score);
+            } else {
+                System.out.println("Manqué !");
+            }
+        }
+        System.out.println("🎉 "+name+", votre score final : "+score);
+    }
+}

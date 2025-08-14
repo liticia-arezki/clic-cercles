@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scores - Clic sur les Cercles</title>
-<link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
@@ -28,11 +28,11 @@
 <script>
     const scoreList = document.getElementById("scoreList");
     const scores = JSON.parse(localStorage.getItem("bestScores")) || [];
-    if (scores.length === 0) {
+    if(scores.length === 0){
         scoreList.innerHTML = "<li>Aucun score enregistré.</li>";
     } else {
-        scores.forEach((score, i) => {
-            scoreList.innerHTML += `<li>#${i+1} - ${score} points</li>`;
+        scores.forEach((s, i) => {
+            scoreList.innerHTML += `<li>#${i+1} - ${s.name} : ${s.score} points 😺</li>`;
         });
     }
 </script>

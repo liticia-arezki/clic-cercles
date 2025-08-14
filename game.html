@@ -1,33 +1,76 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jeu - Clic sur les Cercles</title>
- <link rel="stylesheet" href="./style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jeu des Cercles</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  /* Popup centré */
+  #popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  #popup-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    width: 300px;
+  }
+  #congrats-popup {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  #congrats-popup p {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 20px;
+  }
+</style>
 </head>
 <body>
-<header>
-    <h1>🎯 Clic sur les Cercles</h1>
-    <nav>
-        <a href="index.html">Accueil</a>
-        <a href="game.html">Jouer</a>
-        <a href="scores.html">Scores</a>
-    </nav>
-</header>
 
-<main>
-    <div id="controls">
-        <button id="startBtn">Démarrer</button>
-        <span id="score">Score : 0</span>
-        <span id="time">Temps : 0s</span>
+<h1>Jeu des Cercles</h1>
+
+<div id="popup">
+    <div id="popup-content">
+        <p>🎮 Entrez votre nom 🎮</p>
+        <input type="text" id="player-name" placeholder="Votre nom">
+        <br><br>
+        <button onclick="startGame()">Commencer le jeu</button>
     </div>
-    <div id="gameArea"></div>
-</main>
+</div>
 
-<footer>
-    <p>© 2025 Clic sur les Cercles</p>
-</footer>
+<div id="game-container" style="position: relative; width: 100vw; height: 60vh; margin-top: 20px;">
+    <div id="circle" style="width:50px;height:50px;border-radius:50%;position:absolute;cursor:pointer;"></div>
+</div>
+
+<p>Joueur : <span id="display-name">-</span></p>
+<p>Score : <span id="score">0</span></p>
+
+<div id="congrats-popup">
+    <p id="congrats-text"></p>
+    <button onclick="closeCongrats()">Fermer</button>
+</div>
+
+<h2>Scores précédents :</h2>
+<ul id="all-scores"></ul>
 
 <script src="script.js"></script>
 </body>
