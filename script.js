@@ -1,7 +1,7 @@
 // === VARIABLES ===
 let playerName = "";
 let score = 0;
-let timeLeft = 20;
+let timeLeft = 35; // 35 secondes
 let gameInterval, countdown;
 
 const circle = document.getElementById("circle");
@@ -22,7 +22,7 @@ function startGame() {
     playerName = playerInput.value.trim() || "Anonyme";
     popup.style.display = "none";
     score = 0;
-    timeLeft = 20;
+    timeLeft = 35;
     scoreDisplay.textContent = score;
 
     moveCircle();
@@ -91,9 +91,9 @@ function showCongrats() {
     text.style.marginBottom = "20px";
     text.style.textAlign = "center";
 
-    if(score > 20){
-        text.textContent = `🎆 Félicitations ${playerName} ! Tu es mieux que Litia ! 🎆`;
-        createFireworks(20); // 20 feux
+    if(score > 15){
+        text.textContent = `🎆 Félicitations ${playerName} ! Tu es mieux que Liticia ! 🎆`;
+        createFireworks(30); // beaucoup de feux d’artifice
     } else if(score === 0){
         text.textContent = `You lose 😿`;
     } else {
@@ -124,7 +124,7 @@ function replayGame() {
     congratsPopup.style.display = "none";
     score = 0;
     scoreDisplay.textContent = score;
-    timeLeft = 20;
+    timeLeft = 35;
 
     moveCircle();
     gameInterval = setInterval(moveCircle, 1000);
