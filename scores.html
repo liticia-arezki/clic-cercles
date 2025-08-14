@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scores - Clic sur les Cercles</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <h1>🎯 Clic sur les Cercles</h1>
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="game.html">Jouer</a>
+        <a href="scores.html">Scores</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Meilleurs Scores</h2>
+    <ul id="scoreList"></ul>
+</main>
+
+<footer>
+    <p>© 2025 Clic sur les Cercles</p>
+</footer>
+
+<script>
+    const scoreList = document.getElementById("scoreList");
+    const scores = JSON.parse(localStorage.getItem("bestScores")) || [];
+    if (scores.length === 0) {
+        scoreList.innerHTML = "<li>Aucun score enregistré.</li>";
+    } else {
+        scores.forEach((score, i) => {
+            scoreList.innerHTML += `<li>#${i+1} - ${score} points</li>`;
+        });
+    }
+</script>
+</body>
+</html>
