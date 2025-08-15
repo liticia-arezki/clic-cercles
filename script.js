@@ -1,4 +1,4 @@
-let playerName = '';
+let playerName = "";
 let score = 0;
 let gameInterval;
 let circleInterval;
@@ -13,116 +13,136 @@ const gameContainer = document.getElementById("game-container");
 const scoreDisplay = document.getElementById("score-display");
 const endPopup = document.getElementById("end-popup");
 const endMessage = document.getElementById("end-message");
-const allScoresList = document.getElementById("all-scores");
-const closeBtn = document.getElementById("close-btn");
 const replayBtn = document.getElementById("replay-btn");
+const closeBtn = document.getElementById("close-btn");
+const fireworksContainer = document.getElementById("fireworks-container");
 
-startBtn.onclick = () => {
-    if (!playerInput.value.trim()) {
+// cacher le popup de fin au départ
+endPopup.style.display = "none";
+
+// démarrer le jeu
+startBtn.addEventListener("click", () => {
+    const name = playerInput.value.trim();
+    if (!name) {
         alert("Veuillez entrer votre nom !");
         return;
     }
-    playerName = playerInput.value.trim();
+    playerName = name;
     popup.style.display = "none";
     startGame();
-};
+});
 
 function startGame() {
     score = 0;
     remainingTime = gameTime;
-    scoreDisplay.textContent = `Score : ${score}`;
-    gameContainer.innerHTML = '';
+    scoreDisplay.textContent = score;
+    gameContainer.innerHTML = "";
     endPopup.style.display = "none";
 
+    // faire apparaître le cercle toutes les 800ms
+    circleInterval = setInterval(createCircle, 800);
+
+    // compteur de temps
     gameInterval = setInterval(() => {
         remainingTime--;
         if (remainingTime <= 0) {
             endGame();
         }
     }, 1000);
-
-    spawnCircle();
-    circleInterval = setInterval(spawnCircle, 1000);
 }
 
-function spawnCircle() {
+function createCircle() {
     const circle = document.createElement("div");
     circle.classList.add("circle");
-    circle.style.background = randomColor();
-    circle.style.top = Math.random() * (gameContainer.clientHeight - 50) + "px";
-    circle.style.left = Math.random() * (gameContainer.clientWidth - 50) + "px";
+    // couleurs plus foncées
+    const colors = ["#D6336C", "#6F42C1", "#0D6EFD"];
+    circle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.floor(Math.random() * 50) + 30;
+    circle.style.width = `${size}px`;
+    circle.style.height = `${size}px`;
+    circle.style.top = `${Math.random() * (gameContainer.clientHeight - size)}px`;
+    circle.style.left = `${Math.random() * (gameContainer.clientWidth - size)}px`;
+
+    circle.addEventListener("click", () => {
+        score++;
+        scoreDisplay.textContent = score;
+        circle.remove();
+    });
+
     gameContainer.appendChild(circle);
 
-    circle.onclick = () => {
-        score++;
-        scoreDisplay.textContent = `Score : ${score}`;
-        circle.remove();
-    };
-
-    setTimeout(() => { circle.remove(); }, 1000);
-}
-
-function randomColor() {
-    const colors = ["#ff66b2", "#cc33ff", "#6600cc", "#9933ff", "#ff99ff"];
-    return colors[Math.floor(Math.random() * colors.length)];
+    // cercle disparaît après 1.2 secondes
+    setTimeout(() => {
+        if (circle.parentNode) circle.remove();
+    }, 1200);
 }
 
 function endGame() {
     clearInterval(gameInterval);
     clearInterval(circleInterval);
+    gameContainer.innerHTML = "";
 
+    // afficher le message de fin
+    endPopup.style.display = "flex";
     if (score > 15) {
+        endMessage.textContent = `🎆 Félicitations ${playerName} ! Tu es mieux que Litia 🎆`;
+        endMessage.style.color = "#6F42C1"; // foncé
         startFireworks();
-        endMessage.innerHTML = `🎆 Félicitations ${playerName} ! Tu es mieux que Liticia 🎆`;
-    } else if (score === 0) {
-        endMessage.innerHTML = "You lose 😿";
     } else {
-        endMessage.innerHTML = `Score : ${score}`;
+        endMessage.textContent = `You lose 😿 ${playerName}`;
+        endMessage.style.color = "#D6336C"; // rouge foncé
     }
 
     saveScore();
-    displayScores();
-    endPopup.style.display = "flex";
+    displayAllScores();
 }
 
-function saveScore() {
-    const scores = JSON.parse(localStorage.getItem("bestScores")) || [];
-    scores.push({name: playerName, score: score});
-    localStorage.setItem("bestScores", JSON.stringify(scores));
-}
+// boutons fin
+replayBtn.addEventListener("click", () => {
+    stopFireworks();
+    startGame();
+});
 
-function displayScores() {
-    allScoresList.innerHTML = '';
-    const scores = JSON.parse(localStorage.getItem("bestScores")) || [];
-    scores.forEach(s => {
-        const li = document.createElement("li");
-        li.textContent = `${s.name} : ${s.score} points 😺`;
-        allScoresList.appendChild(li);
-    });
-}
-
-closeBtn.onclick = () => {
+closeBtn.addEventListener("click", () => {
     endPopup.style.display = "none";
     stopFireworks();
-};
+});
 
-replayBtn.onclick = () => {
-    popup.style.display = "none";
-    startGame();
-};
-
-// Fireworks
+// gestion des feux d'artifice
 function startFireworks() {
+    fireworksContainer.innerHTML = "";
     fireworksInterval = setInterval(() => {
         const firework = document.createElement("div");
         firework.classList.add("firework");
-        firework.style.top = Math.random() * window.innerHeight + "px";
-        firework.style.left = Math.random() * window.innerWidth + "px";
-        document.body.appendChild(firework);
-        setTimeout(() => firework.remove(), 1000);
+        firework.style.top = `${Math.random() * window.innerHeight}px`;
+        firework.style.left = `${Math.random() * window.innerWidth}px`;
+        fireworksContainer.appendChild(firework);
+
+        setTimeout(() => {
+            firework.remove();
+        }, 1000);
     }, 200);
 }
 
 function stopFireworks() {
     clearInterval(fireworksInterval);
+    fireworksContainer.innerHTML = "";
+}
+
+// scores dans localStorage
+function saveScore() {
+    let bestScores = JSON.parse(localStorage.getItem("bestScores")) || [];
+    bestScores.push({ name: playerName, score: score });
+    localStorage.setItem("bestScores", JSON.stringify(bestScores));
+}
+
+function displayAllScores() {
+    const allScoresList = document.getElementById("all-scores");
+    allScoresList.innerHTML = "";
+    const bestScores = JSON.parse(localStorage.getItem("bestScores")) || [];
+    bestScores.forEach(s => {
+        const li = document.createElement("li");
+        li.textContent = `${s.name} : ${s.score} points 😺`;
+        allScoresList.appendChild(li);
+    });
 }
