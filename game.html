@@ -3,36 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jeu des Cercles</title>
+<title>Jeu des Cercles 🎯</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Jeu des Cercles</h1>
+
+<header>
+<h1>🎯 Jeu des Cercles</h1>
+<nav>
+<a href="index.html">Accueil</a>
+<a href="game.html">Jouer</a>
+<a href="scores.html">Scores</a>
+</nav>
+</header>
 
 <div id="popup">
     <div id="popup-content">
         <p>🎮 Entrez votre nom 🎮</p>
         <input type="text" id="player-name" placeholder="Votre nom">
+        <br>
         <button id="start-btn">Commencer le jeu</button>
     </div>
 </div>
 
-<div id="game-container">
-    <div id="circle"></div>
-</div>
+<div id="game-container"></div>
+<p id="score-display">Score : 0</p>
 
-<p>Score : <span id="score">0</span></p>
-
-<div id="congrats-popup">
-    <div id="congrats-content">
-        <p id="final-message"></p>
+<div id="end-popup">
+    <div id="end-popup-content">
+        <p id="end-message"></p>
+        <ul id="all-scores"></ul>
         <button id="close-btn">Fermer</button>
         <button id="replay-btn">Rejouer</button>
     </div>
 </div>
-
-<h2>Scores précédents :</h2>
-<ul id="all-scores"></ul>
 
 <script src="script.js"></script>
 </body>
