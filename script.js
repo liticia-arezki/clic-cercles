@@ -85,7 +85,7 @@ function endGame() {
     // afficher le message de fin
     endPopup.style.display = "flex";
     if (score > 15) {
-        endMessage.textContent = `🎆 Félicitations ${playerName} ! Tu es mieux que Litia 🎆`;
+        endMessage.textContent = `🎆 Félicitations ${playerName} ! Tu es mieux que Liticia 🎆`;
         endMessage.style.color = "#6F42C1"; // foncé
         startFireworks();
     } else {
@@ -146,3 +146,4 @@ function displayAllScores() {
         allScoresList.appendChild(li);
     });
 }
+
